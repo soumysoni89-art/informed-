@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFORMED | Everyday help, in one place</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#161a3d;--bg:#f3f5fb;--card:#fff;--muted:#5b6188;--line:#e1e5f2;--accent:#3d5afe;--tint:#e8ecff}
+*{box-sizing:border-box}
+html{font-size:17px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito","Segoe UI",system-ui,sans-serif;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.15;margin:0}
+button,input{font:inherit}
+:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+.hidden{display:none!important}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 5vw;background:var(--ink);color:#fff}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.08em}
+.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ffb703;color:var(--ink);font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:700}
+.tagline{color:#b9bfe6;font-size:.85rem}
+
+main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:28px 5vw 48px}
+.intro{position:relative;overflow:hidden;background:var(--ink);color:#fff;border-radius:24px;padding:40px 32px 44px;margin-bottom:24px}
+.intro::before,.intro::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.intro::before{width:260px;height:260px;right:-60px;top:-80px;background:#3d5afe;opacity:.55}
+.intro::after{width:160px;height:160px;right:90px;bottom:-70px;background:#ffb703;opacity:.9}
+.intro>*{position:relative;z-index:1}
+.eyebrow{margin:0 0 6px;font-size:.82rem;font-weight:700;color:#ffb703}
+.intro h1{font-size:clamp(1.9rem,6vw,3rem);max-width:15ch}
+.intro-text{color:#c9cef0;max-width:44ch;margin:12px 0 0}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.mode-card{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:22px;min-height:190px;border:0;border-radius:22px;cursor:pointer;color:#fff;transition:transform .15s,box-shadow .15s;box-shadow:0 8px 20px -10px rgba(22,26,61,.5)}
+.mode-card:hover{transform:translateY(-4px);box-shadow:0 14px 26px -10px rgba(22,26,61,.55)}
+.mode-card::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;right:-40px;bottom:-50px;background:rgba(255,255,255,.16)}
+.mode-card[data-mode="student"]{background:linear-gradient(145deg,#3d5afe,#2438b8)}
+.mode-card[data-mode="traveller"]{background:linear-gradient(145deg,#0fb5a0,#08786a)}
+.mode-card[data-mode="women"]{background:linear-gradient(145deg,#ee6a43,#b8391c)}
+.mode-card[data-mode="elder"]{background:linear-gradient(145deg,#f5a623,#c17a00)}
+.mode-card .emoji{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#fff;font-size:1.9rem;margin-bottom:10px}
+.mode-title{font-family:"Fraunces",Georgia,serif;font-size:1.35rem;font-weight:700}
+.mode-desc{font-size:.92rem;opacity:.92;max-width:20ch}
+
+.dashboard[data-mode="student"]{--accent:#3d5afe;--tint:#e8ecff;--deep:#2438b8}
+.dashboard[data-mode="traveller"]{--accent:#0fb5a0;--tint:#d9f5f0;--deep:#08786a}
+.dashboard[data-mode="women"]{--accent:#ee6a43;--tint:#fde7df;--deep:#b8391c}
+.dashboard[data-mode="elder"]{--accent:#f5a623;--tint:#fdf0d4;--deep:#a86800}
+
+.dashboard-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;padding:24px 26px;border-radius:22px;background:linear-gradient(135deg,var(--accent),var(--deep));color:#fff}
+.dashboard-head .eyebrow{color:rgba(255,255,255,.8)}
+.dashboard-head h2{font-size:clamp(1.7rem,5vw,2.4rem)}
+.back-btn{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.7);color:#fff;border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:700}
+.back-btn:hover{background:#fff;color:var(--deep)}
+
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:26px}
+.tool{display:flex;flex-direction:column;gap:4px;text-align:left;padding:18px 18px 18px 22px;background:var(--card);border:0;border-left:8px solid var(--accent);border-radius:16px;cursor:pointer;color:var(--ink);box-shadow:0 6px 16px -10px rgba(22,26,61,.4);transition:transform .15s,background .15s}
+.tool:hover{transform:translateY(-3px);background:var(--tint)}
+.tool strong{font-family:"Fraunces",Georgia,serif;font-size:1.08rem;color:var(--deep)}
+.tool span{font-size:.88rem;color:var(--muted)}
+
+.assistant{background:var(--card);border-radius:22px;padding:22px;box-shadow:0 10px 24px -14px rgba(22,26,61,.45)}
+.assistant-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.assistant-head h3{font-size:1.3rem}
+.assistant-head p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.assistant-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-size:1.1rem}
+.chat{display:flex;flex-direction:column;gap:10px;margin:16px 0;max-height:340px;overflow-y:auto;padding:4px}
+.message{max-width:85%;padding:11px 15px;border-radius:18px;white-space:pre-line}
+.message.bot{background:var(--tint);align-self:flex-start;border-bottom-left-radius:4px}
+.message.user{background:var(--deep);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:var(--tint);border:0;color:var(--deep);border-radius:999px;padding:8px 15px;font-size:.88rem;font-weight:700;cursor:pointer}
+.chip:hover{background:var(--accent);color:#fff}
+#chat-form{display:flex;gap:8px}
+#question{flex:1;min-width:0;padding:13px 16px;border:2px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink)}
+#question:focus{border-color:var(--accent);outline:none}
+#chat-form button{padding:0 24px;border:0;border-radius:999px;background:var(--deep);color:#fff;font-weight:800;cursor:pointer}
+.note{display:block;margin-top:12px;color:var(--muted);font-size:.78rem}
+
+footer{padding:18px 5vw;text-align:center;color:var(--muted);font-size:.82rem}
+
+@media (max-width:520px){
+  .tagline{display:none}
+  .intro{padding:30px 22px 38px;border-radius:20px}
+  .message{max-width:94%}
+  .dashboard-head{padding:18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">i</span><span>INFORMED</span></div>
+    <span class="tagline">Everyday help, in one place</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">WELCOME</p>
+      <h1>What can we help you with today?</h1>
+      <p class="intro-text">Choose a mode to see helpful tools made for your needs.</p>
+    </section>
+
+    <section class="modes" aria-label="Choose your mode">
+      <button class="mode-card" data-mode="student">
+        <span class="emoji">🎓</span><span class="mode-title">Student</span>
+        <span class="mode-desc">Study, career and learning help</span>
+      </button>
+      <button class="mode-card" data-mode="traveller">
+        <span class="emoji">🧳</span><span class="mode-title">Traveller</span>
+        <span class="mode-desc">Plan trips and find useful tips</span>
+      </button>
+      <button class="mode-card" data-mode="women">
+        <span class="emoji">🛡️</span><span class="mode-title">Women safety</span>
+        <span class="mode-desc">Safety planning and trusted contacts</span>
+      </button>
+      <button class="mode-card" data-mode="elder">
+        <span class="emoji">🌼</span><span class="mode-title">Elder</span>
+        <span class="mode-desc">Simple guidance and reminders</span>
+      </button>
+    </section>
+
+    <section class="dashboard hidden" id="dashboard">
+      <div class="dashboard-head">
+        <div><p class="eyebrow" id="mode-label">YOUR MODE</p><h2 id="mode-heading">Student</h2></div>
+        <button class="back-btn" id="back">← Change mode</button>
+      </div>
+      <div class="tools-grid" id="tools"></div>
+      <div class="assistant">
+        <div class="assistant-head"><div><h3>Ask INFORMED</h3><p>Try a question to get a helpful starting point.</p></div><span class="assistant-icon">✦</span></div>
+        <div class="chat" id="chat"><div class="message bot">Hi! Choose a suggested question or type your own.</div></div>
+        <div class="suggestions" id="suggestions"></div>
+        <form id="chat-form"><input id="question" type="text" placeholder="Type your question here..." autocomplete="off"><button type="submit">Send</button></form>
+        <small class="note">Prototype note: answers are sample responses for demonstration, not live AI advice.</small>
+      </div>
+    </section>
+  </main>
+  <footer>INFORMED · Prototype by DELTA TEAM</footer>
+  <script>
+const MODES = {
+  student: {
+    title: "Student",
+    tools: [
+      ["Study planner", "Split your syllabus into weekly goals"],
+      ["Career paths", "Explore courses and jobs after your degree"],
+      ["Exam tips", "Revision methods that actually stick"],
+      ["Scholarships", "Where to look for funding and how to apply"]
+    ],
+    questions: [
+      ["How do I make a study timetable?", "Start with your exam date and count backwards.\n1. List every subject and topic.\n2. Give weaker topics more days.\n3. Study in 45-minute blocks with 10-minute breaks.\n4. Keep the last week only for revision and mock tests."],
+      ["Which career should I choose?", "Write down three things: subjects you enjoy, skills you are good at, and the work-life you want. Then talk to two people already working in each field you shortlist. Try a short online course before committing."],
+      ["How can I focus better?", "Put your phone in another room, study one topic at a time, and use a 25-minute timer. Sleep and water matter more than extra hours of study."]
+    ]
+  },
+  traveller: {
+    title: "Traveller",
+    tools: [
+      ["Trip planner", "Build a simple day-by-day plan"],
+      ["Packing list", "Don't forget the essentials"],
+      ["Budget helper", "Estimate travel, stay and food costs"],
+      ["Travel safety", "Stay safe in a new place"]
+    ],
+    questions: [
+      ["What should I pack for a 3-day trip?", "Documents and ID, phone and charger, power bank, 2-3 outfits, light jacket, basic medicines, water bottle, and a small first-aid kit. Keep copies of tickets and ID on your phone."],
+      ["How do I plan a budget trip?", "Fix a total budget first. Split it: travel 35%, stay 30%, food 20%, activities 10%, extra 5%. Book transport and stay early, and eat where locals eat."],
+      ["How do I stay safe in a new city?", "Share your live location with someone you trust, keep valuables out of sight, use licensed taxis or trusted apps, and save the local emergency number. India's tourist helpline is 1363."]
+    ]
+  },
+  women: {
+    title: "Women safety",
+    tools: [
+      ["Trusted contacts", "Choose people to call first"],
+      ["Safety plan", "Steps to follow if you feel unsafe"],
+      ["Helplines", "Numbers to call for help"],
+      ["Safe travel", "Tips for commuting alone"]
+    ],
+    questions: [
+      ["What numbers can I call in an emergency?", "India:\n112 - national emergency number\n181 - Women Helpline\n1091 - Women Helpline (police)\n1090 - Women Power Line (Uttar Pradesh and some other states)\nThe 1090 number is used differently in different states, so check your state's list. If you are in danger right now, call 112 first."],
+      ["How do I make a safety plan?", "1. Pick 2-3 trusted people and tell them your plan.\n2. Keep your phone charged and emergency numbers on speed dial.\n3. Know the nearest safe places on your regular routes.\n4. Agree on a code word that means 'call me now'."],
+      ["How can I travel alone more safely?", "Share your live location with a trusted person, sit near the driver or in a busy coach, avoid sharing your full plans with strangers, and trust your instincts. Leave and get help if something feels wrong."]
+    ]
+  },
+  elder: {
+    title: "Elder",
+    tools: [
+      ["Medicine reminders", "Never miss a dose"],
+      ["Simple phone help", "Calls, messages and video calls"],
+      ["Stay active", "Gentle daily exercises"],
+      ["Help and support", "Numbers for assistance"]
+    ],
+    questions: [
+      ["How do I remember my medicines?", "Use a weekly pill box and set phone alarms at the same times each day. Keep a written list of medicines and doses, and show it to your doctor at every visit."],
+      ["What exercises are safe for me?", "A 20-30 minute daily walk, slow stretching, and sitting-to-standing from a chair are good starting points. Ask your doctor before starting anything new, and stop if you feel pain or dizziness."],
+      ["Who can I call for help?", "Call 112 for any emergency. The Elderline in India is 14567. Keep these numbers and one family contact on a card near your phone."]
+    ]
+  }
+};
+
+const $ = (id) => document.getElementById(id);
+const modesEl = document.querySelector(".modes");
+const dashboard = $("dashboard"), chat = $("chat");
+let current = null;
+
+function addMessage(text, who) {
+  const m = document.createElement("div");
+  m.className = "message " + who;
+  m.textContent = text;
+  chat.appendChild(m);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function answer(q) {
+  const data = MODES[current];
+  const text = q.toLowerCase();
+  const hit = data.questions.find(([question]) => question.toLowerCase() === text);
+  if (hit) return hit[1];
+  const words = text.split(/\W+/).filter((w) => w.length > 3);
+  const best = data.questions.find(([question]) => words.some((w) => question.toLowerCase().includes(w)));
+  return best ? best[1] : "This is a prototype, so I only have sample answers. Try one of the suggested questions below.";
+}
+
+function ask(q) {
+  q = q.trim();
+  if (!q) return;
+  addMessage(q, "user");
+  setTimeout(() => addMessage(answer(q), "bot"), 350);
+}
+
+function openMode(key) {
+  current = key;
+  const data = MODES[key];
+  dashboard.dataset.mode = key;
+  $("mode-label").textContent = "Your mode";
+  $("mode-heading").textContent = data.title;
+
+  $("tools").innerHTML = "";
+  data.tools.forEach(([name, desc]) => {
+    const b = document.createElement("button");
+    b.className = "tool";
+    b.innerHTML = "<strong></strong><span></span>";
+    b.firstChild.textContent = name;
+    b.lastChild.textContent = desc;
+    b.onclick = () => {
+      addMessage("Tell me about: " + name, "user");
+      setTimeout(() => addMessage(name + ": " + desc + ". Full tool coming soon. Ask a question below to get started.", "bot"), 350);
+    };
+    $("tools").appendChild(b);
+  });
+
+  $("suggestions").innerHTML = "";
+  data.questions.forEach(([q]) => {
+    const c = document.createElement("button");
+    c.className = "chip";
+    c.type = "button";
+    c.textContent = q;
+    c.onclick = () => ask(q);
+    $("suggestions").appendChild(c);
+  });
+
+  chat.innerHTML = "";
+  addMessage("Hi! Choose a suggested question or type your own.", "bot");
+  document.querySelector(".intro").classList.add("hidden");
+  modesEl.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  window.scrollTo({ top: 0 });
+}
+
+document.querySelectorAll(".mode-card").forEach((card) => {
+  card.addEventListener("click", () => openMode(card.dataset.mode));
+});
+
+$("back").addEventListener("click", () => {
+  dashboard.classList.add("hidden");
+  document.querySelector(".intro").classList.remove("hidden");
+  modesEl.classList.remove("hidden");
+});
+
+$("chat-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const input = $("question");
+  ask(input.value);
+  input.value = "";
+});
+
+</script>
+</body>
+</html>
